@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -13,10 +14,13 @@ public class Main {
         keyIn.nextLine(); // consumes remaining new line characters
         System.out.print("Please enter your operation of choice. (+, -, x, /)> "); // prompting user for operation
         String n = keyIn.nextLine(); // storing the operation in a temporary string (n)
+        char operation = n.toLowerCase().charAt(0); // converting and storing the operation to a character at position zero
+            if (operation != '+' && operation != '-' && operation != 'x' && operation != '/'){
+                throw new InputMismatchException("Invalid operation type");
+            }
         System.out.print("Enter your second number> "); // prompting user for second value
         double num2 = keyIn.nextDouble(); // storing the second value in a double (num2)
         keyIn.nextLine(); // consumes remaining new line characters
-        char operation = n.toLowerCase().charAt(0); // converting and storing the operation to a character at position zero
         Operations calculator = new Operations();
 
             try {
@@ -41,6 +45,10 @@ public class Main {
                         answer = calculator.divide(num1, num2);
                         break;
                     }
+
+                    default: {
+                        System.err.println("Error");
+                    }
                 }
             } catch (ArithmeticException e) {
                 throw new ArithmeticException("Cannot divide by zero");
@@ -55,9 +63,9 @@ public class Main {
                 redo = keyIn.nextInt();
 
                 if(redo == 1){
-                    System.out.println();
+                    System.out.println("Reloading...");
                 }
-                if(redo == 2){
+                else if(redo == 2){
                     System.out.println("Exiting...");
                 }
                 else{
